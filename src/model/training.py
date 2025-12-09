@@ -1,10 +1,5 @@
 import pandas as pd
-from sqlalchemy import create_engine
 from sklearn.linear_model import LinearRegression
-
-
-def get_engine():
-    return create_engine("postgresql://rex@localhost:5432/DDSC")
 
 
 def prepare_monthly_data(engine):

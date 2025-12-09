@@ -5,15 +5,15 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import streamlit as st
 import pandas as pd
-from sqlalchemy import create_engine
-from model.training import (
+from src.model.training import (
     train_membership_model,
     predict_next_month_members,
     prepare_monthly_data,
 )
 import plotly.express as px
+from src.utils.utils import get_engine
 
-engine = create_engine("postgresql://rex@localhost:5432/DDSC")
+engine = get_engine()
 
 
 @st.cache_data

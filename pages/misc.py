@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-from sqlalchemy import create_engine
+from src.utils.utils import get_engine
+
 
 st.title("⚙️ Miscellaneous")
 
@@ -10,6 +11,6 @@ uploaded_file = st.file_uploader("Choose an excel file", type=["xlsx"])
 
 if uploaded_file:
     df = pd.read_excel("membership.xlsx")
-    engine = create_engine("postgresql://rex@localhost:5432/DDSC")
+    engine = get_engine()
 
     df.to_sql("members", engine, if_exists="replace")
