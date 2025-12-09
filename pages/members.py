@@ -44,3 +44,10 @@ def plot_monthly_membership(monthly_data):
 
 
 st.plotly_chart(plot_monthly_membership(monthly_data))
+st.subheader(
+    f"Next Month Membership Prediction is {int(next_month_prediction[0])} members"
+)
+
+if st.button("Refresh Data"):
+    st.cache_data.clear()
+    st.rerun()
