@@ -16,6 +16,9 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 
+# List of channel IDs to monitor
+CHANNEL_IDS = [1344078615419031664, 1344079770706776185, 1339189911303098384]
+
 
 @client.event
 async def on_ready():
@@ -33,30 +36,33 @@ async def on_ready():
     except FileNotFoundError:
         pass
 
-    channel = client.get_channel(1451919830499201024)
+    # Loop through all channels
+    for channel_id in CHANNEL_IDS:
+        channel = client.get_channel(channel_id)
 
-    print("Fetching message history...")
-    if channel and hasattr(channel, "history"):
-        after_obj = discord.Object(id=last_id) if last_id is not None else None
-        async for message in channel.history(limit=1000, after=after_obj):  # type: ignore
-            with open(csv_path, "a", newline="", encoding="utf-8") as f:
-                writer = csv.writer(f)
-                if f.tell() == 0:
+        if channel and hasattr(channel, "history"):
+            print(f"Fetching history from {channel.name}...")
+            after_obj = discord.Object(id=last_id) if last_id is not None else None
+
+            async for message in channel.history(limit=1000, after=after_obj):  # type: ignore
+                with open(csv_path, "a", newline="", encoding="utf-8") as f:
+                    writer = csv.writer(f)
+                    if f.tell() == 0:
+                        writer.writerow(
+                            ["message_id", "timestamp", "author", "channel", "message"]
+                        )
+
                     writer.writerow(
-                        ["message_id", "timestamp", "author", "channel", "message"]
+                        [
+                            message.id,
+                            message.created_at.isoformat(),
+                            str(message.author),
+                            str(message.channel),
+                            message.content,
+                        ]
                     )
 
-                writer.writerow(
-                    [
-                        message.id,
-                        message.created_at.isoformat(),
-                        str(message.author),
-                        str(message.channel),
-                        message.content,
-                    ]
-                )
-
-    print("History fetched!")
+    print("All history fetched!")
 
 
 @client.event

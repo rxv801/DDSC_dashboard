@@ -3,3 +3,4 @@ venv/
 .gitignore
 .pvt_files/
 .env
+data/discord_messages.csv
