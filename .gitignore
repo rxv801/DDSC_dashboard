@@ -4,3 +4,4 @@ venv/
 .pvt_files/
 .env
 data/discord_messages.csv
+data/discord_messages.csv
