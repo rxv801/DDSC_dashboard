@@ -8,10 +8,3 @@ def analyze_sentiment(text: str) -> dict[str, Any]:
     )
     result = sentiment(text)
     return result[0]
-
-
-while True:
-    text = input("enter text: \n")
-    results = analyze_sentiment(text)
-    print(results)
-    print("\n")

@@ -5,3 +5,4 @@ psycopg2-binary
 openpyxl
 scikit-learn
 plotly
+python-dotenv
